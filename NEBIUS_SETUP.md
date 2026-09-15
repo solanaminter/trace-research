@@ -27,16 +27,16 @@ Model IDs are namespaced and case-sensitive. List exactly what's live for you:
 curl -s "$NEBIUS_BASE_URL/models" -H "Authorization: Bearer $NEBIUS_API_KEY"
 ```
 
-Trace's defaults (live on Token Factory as of Sep 2026):
+Trace's defaults (verified live on Token Factory 2026-09-15 via `/models`):
 
 | Tier | Model ID | Notes |
 |---|---|---|
 | planner / verifier | `nvidia/nemotron-3-super-120b-a12b` | 120B/12B active MoE, 1M context, native function calling, reasoning toggle |
-| drafter | `nvidia/nemotron-3-nano-30b-a3b` | 30B/3B active, ~$0.06/$0.24 per M tokens, fast, JSON mode |
+| drafter | `nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B` | 30B/3B active, fast + cheap, JSON mode. IDs are case-sensitive |
+| ultra (optional) | `nvidia/Nemotron-3-Ultra-550b-a55b` | 550B flagship; point `STAGE_TIER["plan"]`/`["verify"]` at `"ultra"` when credits allow |
 
-Note: a ~500B "Nemotron 3 Ultra" tier was not confirmed live on Token Factory
-as of Sep 2026. If it ships, add it to `TIERS` in `trace/config.py` and point
-`STAGE_TIER["plan"]` / `["verify"]` at it — one-line change.
+Note: the old lowercase `nvidia/nemotron-3-nano-30b-a3b` ID 404s — use the exact
+casing above. If you add new models, copy exact IDs from `/models`.
 
 ## 4. Environment
 

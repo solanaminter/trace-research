@@ -22,9 +22,9 @@ NEBIUS_API_KEY = os.environ.get("NEBIUS_API_KEY", "")
 #             "low"  -> minimal thinking (fast, cheap)
 #             "off"  -> direct answer
 #
-# NOTE (Sep 2026): the ~500B Nemotron 3 Ultra tier is not confirmed live on
-# Token Factory. The config below builds on Nano + Super (both live). If Ultra
-# ships, add it to TIERS and set planner/verify weights to it — no code change.
+# NOTE (verified 2026-09-15 via live /models call): Nemotron 3 Ultra 550B IS live
+# on Token Factory as nvidia/Nemotron-3-Ultra-550b-a55b (added as "ultra" tier
+# below). Model IDs are case-sensitive — always confirm against /models.
 @dataclass
 class Tier:
     model_id: str
@@ -34,12 +34,12 @@ class Tier:
 
 TIERS: dict[str, Tier] = {
     "planner": Tier(
-        model_id="nvidia/nemotron-3-super-120b-a12b",  # 120B/12B active MoE, 1M ctx, native tool calling
+        model_id="nvidia/nemotron-3-super-120b-a12b",  # verified live 2026-09-15 via /models
         reasoning="on",
         use="Research-plan generation, multi-step decomposition, heavy reasoning",
     ),
     "drafter": Tier(
-        model_id="nvidia/nemotron-3-nano-30b-a3b",  # 30B/3B active, fast + cheap, JSON mode
+        model_id="nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",  # verified live 2026-09-15; IDs are case-sensitive
         reasoning="low",
         use="High-volume section drafting, summarization, extractive QA",
     ),
@@ -47,6 +47,13 @@ TIERS: dict[str, Tier] = {
         model_id="nvidia/nemotron-3-super-120b-a12b",
         reasoning="on",
         use="Claim-by-claim verification against cited sources, confidence scoring",
+    ),
+    # Optional: Nemotron 3 Ultra 550B is live on Token Factory (verified 2026-09-15).
+    # Point STAGE_TIER["plan"]/["verify"] at "ultra" when credits allow — best quality, highest cost.
+    "ultra": Tier(
+        model_id="nvidia/Nemotron-3-Ultra-550b-a55b",
+        reasoning="on",
+        use="Flagship reasoning tier (550B); swap in for planner/verifier when funded",
     ),
 }
 
