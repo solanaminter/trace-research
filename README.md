@@ -48,8 +48,9 @@ endpoint (`https://api.tokenfactory.nebius.com/v1`) with a `NEBIUS_API_KEY`.
 | Stage | Model (live on Token Factory) | Reasoning | Why |
 |---|---|---|---|
 | PLAN | `nvidia/nemotron-3-super-120b-a12b` | on | heavy multi-step decomposition, 1M context, native tool calling |
-| DRAFT | `nvidia/nemotron-3-nano-30b-a3b` | low | high-volume section writing — fast and cheap |
+| DRAFT | `nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B` | low | high-volume section writing — fast and cheap |
 | VERIFY | `nvidia/nemotron-3-super-120b-a12b` | on | careful claim-by-claim checking against sources |
+| (optional) | `nvidia/Nemotron-3-Ultra-550b-a55b` | on | flagship 550B tier; swap in for PLAN/VERIFY when credits allow |
 
 Tiering is config in `trace/config.py` — swap model IDs without touching code
 (if Nemotron 3 Ultra ships on Token Factory, add one entry).
