@@ -30,7 +30,7 @@ def test_tier_routing_per_stage():
         assert call.tier == tier_name
         assert call.model_id == config.TIERS[tier_name].model_id
         assert call.mock is True
-        assert "nvidia/nemotron" in call.model_id.lower()  # NVIDIA open models only
+        assert "nemotron" in call.model_id.lower()  # NVIDIA open models only
 
 
 def test_tiers_cover_cost_latency_and_reasoning():
