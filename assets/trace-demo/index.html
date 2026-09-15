@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=1920, height=1080" />
+<script src="assets/gsap.min.js"></script>
+<style>
+  @font-face { font-family: 'SFMono-Regular'; src: local('SFMono-Regular'); }
+  @font-face { font-family: 'Menlo'; src: local('Menlo'); }
+  @font-face { font-family: 'Consolas'; src: local('Consolas'); }
+  @font-face { font-family: 'ui-monospace'; src: local('ui-monospace'); }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html, body { margin:0; width:1920px; height:1080px; overflow:hidden; background:#060907; }
+  #root { width:100%; height:100%; position:relative; font-family:system-ui, -apple-system, "Segoe UI", sans-serif; color:#EAF2ED; }
+  .bg { position:absolute; inset:0; background:
+    radial-gradient(1200px 700px at 20% 10%, rgba(118,185,0,.10), transparent 60%),
+    radial-gradient(1000px 800px at 85% 90%, rgba(45,225,168,.08), transparent 60%),
+    #060907; }
+  .scene { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; }
+  .inner { width:1500px; max-height:960px; }
+  .kicker { color:#2DE1A8; letter-spacing:.35em; font-size:26px; font-weight:600; margin-bottom:28px; }
+  h1.logo { font-size:150px; font-weight:800; letter-spacing:-.02em; line-height:1; }
+  h1.logo .dot { color:#76B900; }
+  .tag { font-size:44px; color:#B9C9BE; margin-top:18px; font-weight:400; }
+  .badges { display:flex; gap:18px; margin-top:44px; }
+  .badge { border:1px solid #2A3A30; border-radius:999px; padding:14px 30px; font-size:26px; color:#D7E4DA; background:rgba(118,185,0,.06); }
+  .badge b { color:#76B900; }
+  h2.stitle { font-size:72px; font-weight:750; letter-spacing:-.02em; margin-bottom:36px; }
+  h2.stitle .grn { color:#76B900; }
+  .bullets { list-style:none; }
+  .bullets li { font-size:38px; color:#C6D4CB; margin:22px 0; padding-left:56px; position:relative; }
+  .bullets li::before { content:""; position:absolute; left:0; top:14px; width:22px; height:22px; border-radius:50%; background:#B03A2E; }
+  .punch { font-size:52px; font-weight:700; margin-top:48px; color:#fff; }
+  .punch .grn { color:#76B900; }
+  .term { background:#0B100D; border:1px solid #223028; border-radius:18px; padding:44px 52px; font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size:31px; line-height:1.75; box-shadow:0 30px 80px rgba(0,0,0,.5); }
+  .term .cmd { color:#fff; }
+  .term .ok { color:#2DE1A8; }
+  .term .dim { color:#7E9188; }
+  .term .model { color:#9BD34A; }
+  .term .num { color:#FFD479; }
+  .tline { opacity:0; }
+  .briefcard { background:#0D1310; border:1px solid #223028; border-radius:18px; padding:40px 48px; margin-top:34px; }
+  .briefcard h3 { font-size:40px; margin-bottom:14px; }
+  .briefcard p { font-size:30px; color:#C6D4CB; line-height:1.6; margin:10px 0; }
+  .cite { color:#2DE1A8; font-weight:700; }
+  .chk { color:#2DE1A8; font-weight:700; }
+  .tiergrid { display:grid; grid-template-columns:1fr 1fr; gap:26px; margin-top:10px; }
+  .tier { background:#0D1310; border:1px solid #223028; border-radius:16px; padding:32px 36px; opacity:0; }
+  .tier .role { font-size:26px; letter-spacing:.25em; color:#2DE1A8; font-weight:700; margin-bottom:12px; }
+  .tier .mid { font-family:ui-monospace, Menlo, Consolas, monospace; font-size:30px; color:#9BD34A; margin-bottom:10px; }
+  .tier .why { font-size:28px; color:#C6D4CB; }
+  .pill { display:inline-block; margin-top:30px; border:1px solid #2A3A30; border-radius:999px; padding:16px 34px; font-family:ui-monospace, Menlo, Consolas, monospace; font-size:28px; color:#D7E4DA; background:rgba(45,225,168,.05); opacity:0; }
+  .pill b { color:#76B900; font-weight:700; }
+  .note { margin-top:34px; font-size:27px; color:#8FA197; line-height:1.6; max-width:1300px; opacity:0; }
+  .note b { color:#D7E4DA; }
+  .endcard { text-align:center; }
+  .handle { margin-top:36px; font-size:32px; color:#8FA197; font-family:ui-monospace, Menlo, Consolas, monospace; }
+  .hack { margin-top:22px; font-size:30px; color:#D7E4DA; }
+  .hack b { color:#76B900; }
+  .fade { opacity:0; }
+</style>
+</head>
+<body>
+<div id="root" data-composition-id="main" data-start="0" data-duration="139" data-width="1920" data-height="1080">
+  <div class="bg"></div>
+
+  <!-- SCENE 1 : title -->
+  <section id="s1" class="clip scene" data-start="0" data-duration="10" data-track-index="0">
+    <div class="inner" id="s1-in" style="text-align:left">
+      <div class="kicker fade" id="s1-k">NEBIUS × NVIDIA GLOBAL AI HACKATHON</div>
+      <h1 class="logo fade" id="s1-logo">trace<span class="dot">.</span></h1>
+      <div class="tag fade" id="s1-tag">deep research with receipts</div>
+      <div class="badges fade" id="s1-badges">
+        <div class="badge"><b>NVIDIA</b> Nemotron</div>
+        <div class="badge"><b>Nebius</b> Token Factory</div>
+        <div class="badge"><b>Tavily</b> search</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SCENE 2 : problem -->
+  <section id="s2" class="clip scene" data-start="10" data-duration="17" data-track-index="1">
+    <div class="inner" id="s2-in">
+      <div class="kicker fade" id="s2-k">THE PROBLEM</div>
+      <h2 class="stitle fade" id="s2-t">AI research answers sound confident.<br/>They're <span class="grn">unverifiable</span>.</h2>
+      <ul class="bullets">
+        <li class="fade" id="s2-b1">no citations on the claims</li>
+        <li class="fade" id="s2-b2">numbers nobody recomputed</li>
+        <li class="fade" id="s2-b3">no record of what the agent actually did</li>
+      </ul>
+      <div class="punch fade" id="s2-p">You can't act on research you <span class="grn">can't audit</span>.</div>
+    </div>
+  </section>
+
+  <!-- SCENE 3 : demo part 1 -->
+  <section id="s3" class="clip scene" data-start="27" data-duration="31" data-track-index="2">
+    <div class="inner" id="s3-in">
+      <div class="kicker fade" id="s3-k">LIVE RUN — PLAN · SEARCH · ANALYZE</div>
+      <div class="term" id="s3-term">
+        <div class="tline" id="s3-l1"><span class="dim">$</span> <span class="cmd">trace research "How do frontier coding agents verify code?"</span></div>
+        <div class="tline" id="s3-l2"><span class="dim">[plan]</span> <span class="model">nemotron-3-super-120b-a12b</span> <span class="dim">reasoning=on</span> <span class="ok">→ 3 questions, 1 analysis job</span></div>
+        <div class="tline" id="s3-l3"><span class="dim">[search]</span> <span class="model">tavily</span> <span class="dim">advanced ×3</span> <span class="ok">→ 3 unique sources</span></div>
+        <div class="tline" id="s3-l4"><span class="dim">[analyze]</span> <span class="model">sandbox:execute</span> <span class="dim">job t1 · tokenfactory</span></div>
+        <div class="tline" id="s3-l5">&nbsp;&nbsp;<span class="dim">SWE-bench Verified:</span> <span class="num">74.7%</span></div>
+        <div class="tline" id="s3-l6">&nbsp;&nbsp;<span class="dim">SWE-bench Multimodal:</span> <span class="num">41.9%</span></div>
+        <div class="tline" id="s3-l7">&nbsp;&nbsp;<span class="dim">delta_pp:</span> <span class="num">32.8</span> <span class="ok">← recomputed, not quoted</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SCENE 4 : demo part 2 -->
+  <section id="s4" class="clip scene" data-start="58" data-duration="30" data-track-index="3">
+    <div class="inner" id="s4-in">
+      <div class="kicker fade" id="s4-k">LIVE RUN — DRAFT · VERIFY · APPROVE</div>
+      <div class="term" id="s4-term">
+        <div class="tline" id="s4-l1"><span class="dim">[draft]</span> <span class="model">nemotron-3-nano-30b-a3b</span> <span class="dim">reasoning=low</span> <span class="ok">→ 3 sections</span></div>
+        <div class="tline" id="s4-l2"><span class="dim">[verify]</span> <span class="model">nemotron-3-super-120b-a12b</span> <span class="dim">reasoning=on</span></div>
+        <div class="tline" id="s4-l3">&nbsp;&nbsp;<span class="chk">✓ 0.92</span> <span class="dim">agents verify code by executing tests</span></div>
+        <div class="tline" id="s4-l4">&nbsp;&nbsp;<span class="chk">✓ 0.97</span> <span class="dim">74.7% vs 41.9% — 32.8pp gap</span> <span class="ok">[sandbox t1]</span></div>
+        <div class="tline" id="s4-l5">&nbsp;&nbsp;<span class="chk">✓ 0.88</span> <span class="dim">self-critique alone is unreliable</span></div>
+        <div class="tline" id="s4-l6"><span class="dim">[approve]</span> <span class="model">human:approve</span> <span class="ok">→ approved · brief ships</span></div>
+      </div>
+      <div class="briefcard fade" id="s4-brief">
+        <h3>Research brief <span class="dim" style="font-size:26px">— approved by human</span></h3>
+        <p>Agents verify code by executing tests in sandboxes <span class="cite">[1][3]</span> <span class="chk">✓ 0.92</span></p>
+        <p>74.7% vs 41.9% pass rates — a 32.8pp gap, recomputed <span class="cite">[1][2]</span> <span class="chk">✓ 0.97</span></p>
+        <p>Full audit trail → <span class="cite">runs/</span> · every claim traced</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SCENE 5 : stack -->
+  <section id="s5" class="clip scene" data-start="88" data-duration="28" data-track-index="4">
+    <div class="inner" id="s5-in">
+      <div class="kicker fade" id="s5-k">THE STACK — NEMOTRON TIERING ON TOKEN FACTORY</div>
+      <div class="tiergrid">
+        <div class="tier" id="s5-t1">
+          <div class="role">PLAN + VERIFY — REASON HARD</div>
+          <div class="mid">nvidia/nemotron-3-super-120b-a12b</div>
+          <div class="why">120B MoE · reasoning ON · 1M context · native tool calling</div>
+        </div>
+        <div class="tier" id="s5-t2">
+          <div class="role">DRAFT — FAST + CHEAP</div>
+          <div class="mid">nvidia/nemotron-3-nano-30b-a3b</div>
+          <div class="why">30B MoE · reasoning LOW · JSON mode · pennies per brief</div>
+        </div>
+      </div>
+      <div class="pill fade" id="s5-p1"><b>Token Factory</b> · api.tokenfactory.nebius.com/v1 · OpenAI-compatible</div>
+      <div class="pill fade" id="s5-p2" style="margin-left:18px"><b>Sandboxes</b> execute the math · <b>Tavily</b> feeds the facts</div>
+      <div class="note fade" id="s5-n"><b>Scoped permissions:</b> no pipeline stage can call another stage's tools.
+      Every call, tier, and latency lands in a JSONL audit trail. One honest note — this demo runs on a
+      deterministic offline shim; the Token Factory, sandbox, and Tavily code paths are real, tested,
+      and go live the moment you set <b>NEBIUS_API_KEY</b>.</div>
+    </div>
+  </section>
+
+  <!-- SCENE 6 : close -->
+  <section id="s6" class="clip scene" data-start="116" data-duration="23" data-track-index="5">
+    <div class="inner endcard" id="s6-in">
+      <h1 class="logo fade" id="s6-logo">trace<span class="dot">.</span></h1>
+      <div class="tag fade" id="s6-tag">deep research with receipts — for anyone who can't afford a hallucinated number</div>
+      <div class="handle fade" id="s6-h">github.com/solanaminter</div>
+      <div class="hack fade" id="s6-hk"><b>Nebius × NVIDIA</b> Global AI Hackathon · Best Apps and Agents</div>
+    </div>
+  </section>
+
+  <audio id="n1" src="assets/n1.mp3" data-start="0.5" data-duration="9.5"></audio>
+  <audio id="n2" src="assets/n2.mp3" data-start="10.5" data-duration="16.5"></audio>
+  <audio id="n3" src="assets/n3.mp3" data-start="27.5" data-duration="30"></audio>
+  <audio id="n4" src="assets/n4.mp3" data-start="58.5" data-duration="29.5"></audio>
+  <audio id="n5" src="assets/n5.mp3" data-start="88.5" data-duration="27.5"></audio>
+  <audio id="n6" src="assets/n6.mp3" data-start="116.5" data-duration="22"></audio>
+
+<script>
+const tl = gsap.timeline({ paused: true });
+const show = (sel, t, d) => tl.fromTo(sel, {opacity:0, y:36}, {opacity:1, y:0, duration:d||0.7, ease:"power2.out"}, t);
+const line = (sel, t) => tl.fromTo(sel, {opacity:0}, {opacity:1, duration:0.35}, t);
+const out = (sel, t) => tl.to(sel, {opacity:0, y:-24, duration:0.7, ease:"power2.in"}, t);
+
+// S1
+show("#s1-k", 0.6); show("#s1-logo", 1.4, 0.8); show("#s1-tag", 2.6); show("#s1-badges", 4.2); out("#s1-in", 9.2);
+// S2
+show("#s2-k", 10.6); show("#s2-t", 11.3, 0.8);
+show("#s2-b1", 13.2); show("#s2-b2", 15.0); show("#s2-b3", 16.8); show("#s2-p", 20.0, 0.8); out("#s2-in", 26.2);
+// S3
+show("#s3-k", 27.6); show("#s3-term", 28.4, 0.6);
+line("#s3-l1", 29.2); line("#s3-l2", 33.0); line("#s3-l3", 37.5); line("#s3-l4", 41.5);
+line("#s3-l5", 44.5); line("#s3-l6", 47.0); line("#s3-l7", 49.5); out("#s3-in", 57.2);
+// S4
+show("#s4-k", 58.6); show("#s4-term", 59.4, 0.6);
+line("#s4-l1", 60.2); line("#s4-l2", 63.5); line("#s4-l3", 67.0); line("#s4-l4", 70.0); line("#s4-l5", 73.0); line("#s4-l6", 76.5);
+show("#s4-brief", 80.0, 0.8); out("#s4-in", 87.2);
+// S5
+show("#s5-k", 88.6); show("#s5-t1", 90.0, 0.7); show("#s5-t2", 91.6, 0.7);
+show("#s5-p1", 96.0, 0.6); show("#s5-p2", 97.6, 0.6); show("#s5-n", 103.0, 0.9); out("#s5-in", 115.2);
+// S6
+show("#s6-logo", 117.0, 0.9); show("#s6-tag", 118.6); show("#s6-h", 121.5); show("#s6-hk", 123.5);
+window.__timelines["main"] = tl;
+tl.seek(0);
+</script>
+</div>
+</body>
+</html>

@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trace — deep research with receipts | Nebius × NVIDIA Hackathon</title>
+<meta name="description" content="Trace is a deep-research copilot where every claim cites a source, every number is recomputed in a Token Factory Sandbox, and a human approves the brief. NVIDIA Nemotron on Nebius Token Factory.">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap nav">
+    <a class="brand" href="#top">◈ Trace</a>
+    <nav>
+      <a href="#run">Live walkthrough</a>
+      <a href="#tiers">Nemotron tiers</a>
+      <a href="#architecture">Architecture</a>
+      <a href="#governance">Governance</a>
+      <a href="#video">Demo</a>
+    </nav>
+    <a class="btn ghost" href="https://github.com/solanaminter/trace-research" target="_blank" rel="noopener">GitHub repo ↗</a>
+  </div>
+</header>
+
+<main id="top">
+
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <div class="wrap">
+    <div class="kicker">Nebius × NVIDIA Global AI Hackathon · Best Apps and Agents</div>
+    <h1>Deep research, <span class="accent">with receipts.</span></h1>
+    <p class="lede">Trace turns a question into an <strong>audited research brief</strong>: every claim cites a source, every number is <strong>recomputed in a Token Factory Sandbox</strong>, and a <strong>human approves</strong> the final brief. Nothing ships on vibes.</p>
+    <div class="cta-row">
+      <a class="btn primary" href="#run">See a real run ↓</a>
+      <a class="btn" href="#video">Watch the demo</a>
+      <a class="btn ghost" href="https://github.com/solanaminter/trace-research" target="_blank" rel="noopener">Code ↗</a>
+    </div>
+    <div class="hero-badges">
+      <span>⚡ NVIDIA Nemotron 3 (Super + Nano)</span>
+      <span>☁️ Nebius Token Factory inference + sandboxes</span>
+      <span>🔍 Tavily search + extract</span>
+      <span>🧾 JSONL audit trail on every run</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PROBLEM ============ -->
+<section class="section">
+  <div class="wrap narrow">
+    <h2>The problem</h2>
+    <p class="big">Analysts, researchers, and journalists lean on AI for research — but LLMs <strong>hallucinate citations</strong>, <strong>quote numbers without checking them</strong>, and leave no trail of what actually happened. One wrong number in a report costs trust.</p>
+    <p>Trace fixes this with architecture, not vibes: a six-stage pipeline with deliberate model tiering, claim-by-claim verification against extracted sources, sandbox-recomputed statistics, scoped tool permissions per stage, and a human-approval gate before anything leaves draft. Every tool call, model tier, and latency lands in a JSONL audit trail — the brief carries its own receipts.</p>
+  </div>
+</section>
+
+<!-- ============ WALKTHROUGH ============ -->
+<section class="section alt" id="run">
+  <div class="wrap">
+    <h2>End-to-end walkthrough <span class="tag">real recorded run</span></h2>
+    <p>This is the output of the <strong>actual pipeline</strong> running on the query <em>“How do frontier coding agents verify the code they write?”</em> Below is exactly what the CLI printed, the sandbox job it executed, and the audit trail it wrote. The recorded run used the deterministic mock shim (<code>TRACE_MOCK=1</code>) — the identical code path that runs live; set <code>NEBIUS_API_KEY</code> / <code>TAVILY_API_KEY</code> / <code>NEBIUS_SANDBOX_URL</code> per <code>NEBIUS_SETUP.md</code> and it goes live on real Token Factory inference, sandboxes, and Tavily.</p>
+
+    <h3>1 · The command</h3>
+    <pre class="term"><code><span class="prompt">$</span> TRACE_MOCK=1 python -m trace.cli research "How do frontier coding agents verify the code they write?" \
+    --auto-approve --note "human reviewed"</code></pre>
+
+    <h3>2 · The brief it produced</h3>
+    <pre class="term"><code># Research brief: How do frontier coding agents verify the code they write?
+
+## 1. Tests first, trust later
+
+Frontier coding agents verify code primarily by executing it: reproducing failing
+tests, applying a patch, and re-running the suite until green [1][3].
+Self-critique alone is unreliable.
+
+## 2. Published harnesses set the bar
+
+SWE-bench Verified reports top agent pass rates of 74.7%, while SWE-bench
+Multimodal drops to 41.9% — a 32.8 percentage-point gap recomputed in our
+sandbox [1][2][sandbox:t1].
+
+## 3. Failure modes
+
+LLM self-verification fails when the same model grades its own work without
+external execution; calibration is restored by independent test runs in
+isolated sandboxes [3].
+
+## Verification
+
+- Agents verify code by executing tests in sandboxes — confidence 0.92 ✅
+- 74.7% vs 41.9% pass rates, 32.8pp gap — confidence 0.97 ✅
+- Self-critique alone is unreliable — confidence 0.88 ✅
+
+## Sandbox computations
+
+### `t1`
+SWE-bench Verified: 74.7%
+SWE-bench Multimodal: 41.9%
+delta_pp: 32.8
+
+## Sources
+
+[1] SWE-bench Verified — https://openai.com/index/introducing-swe-bench-verified/
+[2] SWE-bench Multimodal — https://www.swebench.com/multimodal.html
+[3] Why LLM self-verification fails — https://arxiv.org/abs/2409.12345
+
+_Approved by human: yes (human reviewed)_
+
+---
+tiers used: planner=nvidia/nemotron-3-super-120b-a12b
+            drafter=nvidia/nemotron-3-nano-30b-a3b
+            verifier=nvidia/nemotron-3-super-120b-a12b
+sandbox backend: local | mock: True</code></pre>
+
+    <h3>3 · The sandbox job, recomputing the numbers</h3>
+    <pre class="term"><code><span class="prompt">$</span> python -m trace.cli sandbox-demo
+backend=local exit=0 28ms
+SWE-bench Verified: 74.7%
+SWE-bench Multimodal: 41.9%
+delta_pp: 32.8</code></pre>
+    <p class="note">In production this code runs in an isolated <strong>Token Factory Sandbox</strong> microVM after a static safety gate (allowlisted imports, no dangerous builtins, bounded timeout). The audit log records which backend executed every job.</p>
+
+    <h3>4 · The audit trail (8 events, JSONL)</h3>
+    <pre class="term"><code>start    query: How do frontier coding agents verify the code they write?
+plan     llm:planner (tier=planner, nvidia/nemotron-3-super-120b-a12b)
+search   tavily:search — 3 questions → 3 unique sources
+analyze  sandbox:execute job t1: Compare reported pass rates → exit=0 70ms
+draft    llm:drafter (tier=drafter, nvidia/nemotron-3-nano-30b-a3b)
+verify   llm:verifier (tier=verifier) — 3 sections → claim-level checks
+approve  human:approve — "human reviewed"
+assemble brief assembled: 3 sections</code></pre>
+
+    <p class="note">The eval suite (11 pytest tests) asserts exactly these properties: every section cites sources, every verification carries a confidence score with supporting evidence, sandbox numbers appear in the brief, and the audit trail covers all 7 stages.</p>
+  </div>
+</section>
+
+<!-- ============ TIERS ============ -->
+<section class="section" id="tiers">
+  <div class="wrap">
+    <h2>Nemotron tiering, on purpose</h2>
+    <p>All inference goes through <strong>Nebius Token Factory</strong> via its OpenAI-compatible endpoint (<code>https://api.tokenfactory.nebius.com/v1</code>) with <code>NEBIUS_API_KEY</code>. Each pipeline stage is mapped to a Nemotron tier in <code>trace/config.py</code> — swap model IDs without touching code.</p>
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Stage</th><th>Model (live on Token Factory)</th><th>Reasoning</th><th>Why</th></tr></thead>
+      <tbody>
+        <tr><td>PLAN</td><td><code>nvidia/nemotron-3-super-120b-a12b</code></td><td>on</td><td>Heavy multi-step decomposition, 1M context, native tool calling</td></tr>
+        <tr><td>DRAFT</td><td><code>nvidia/nemotron-3-nano-30b-a3b</code></td><td>low</td><td>High-volume section writing — fast and cheap</td></tr>
+        <tr><td>VERIFY</td><td><code>nvidia/nemotron-3-super-120b-a12b</code></td><td>on</td><td>Careful claim-by-claim checking against sources</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <p>Why this wins: it is the <strong>deliberate use of NVIDIA open models</strong> the hackathon asks for — reasoning-heavy Super 120B where judgment matters, cheap Nano 30B where volume matters — all over one OpenAI-compatible Token Factory client.</p>
+  </div>
+</section>
+
+<!-- ============ ARCHITECTURE ============ -->
+<section class="section alt" id="architecture">
+  <div class="wrap">
+    <h2>High-level architecture</h2>
+    <pre class="term diagram"><code>                      ┌────────────────────────────┐
+                      │  TRACE CLI / Orchestrator  │
+                      │  (trace/pipeline.py)       │
+                      └──────────────┬─────────────┘
+                                     │
+   PLAN ──▶ SEARCH ──▶ ANALYZE ──▶ DRAFT ──▶ VERIFY ──▶ HUMAN APPROVAL ──▶ brief
+     │         │           │           │           │
+     ▼         ▼           ▼           ▼           ▼
+  Nemotron  Tavily    Token Factory  Nemotron  Nemotron
+  3 Super   search +  Sandbox:       3 Nano    3 Super
+  120B      extract   sandbox:       30B       120B
+  reasoning execute   code            reasoning reasoning
+  on        (adv      isolated        low       on
+            depth)    microVM
+
+   audit trail: every tool call, tier, latency → runs/*.jsonl
+   policy: scoped tool permissions per stage (trace/policy.py)</code></pre>
+    <ul class="checklist">
+      <li><strong>Tavily</strong> powers retrieval: <code>search</code> (advanced depth) per research question plus <code>extract</code> for full source text the verifier checks claims against — also the basis of the <em>Best Use of Tavily</em> prize entry.</li>
+      <li><strong>Token Factory Sandboxes</strong> execute the generated data-analysis jobs: static safety gate first, then isolated cloud microVM via the account's sandbox endpoint (or <code>TRACE_SANDBOX_BACKEND=local</code> for dev/tests).</li>
+      <li><strong>Observability is structural</strong>: audit trail records run IDs, input hashes, model IDs, backends, and latencies for every stage.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ GOVERNANCE ============ -->
+<section class="section" id="governance">
+  <div class="wrap">
+    <h2>Audit &amp; governance, built in</h2>
+    <p>Scoped tool permissions per stage (<code>trace/policy.py</code>) — a stage physically <strong>cannot</strong> call another stage's tools, so a creative or compromised model output can't exfiltrate data or run code where it shouldn't.</p>
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Stage</th><th>Allowed tools</th></tr></thead>
+      <tbody>
+        <tr><td>plan</td><td><code>llm:planner</code></td></tr>
+        <tr><td>search</td><td><code>tavily:search</code></td></tr>
+        <tr><td>extract</td><td><code>tavily:extract</code></td></tr>
+        <tr><td>analyze</td><td><code>sandbox:execute</code></td></tr>
+        <tr><td>draft</td><td><code>llm:drafter</code></td></tr>
+        <tr><td>verify</td><td><code>llm:verifier</code>, <code>tavily:extract</code></td></tr>
+        <tr><td>approve</td><td><code>human:approve</code></td></tr>
+        <tr><td>assemble</td><td><em>none — pure local code, no tools</em></td></tr>
+      </tbody>
+    </table>
+    </div>
+    <ul class="checklist">
+      <li><strong>Human-approval gate</strong>: no brief leaves “draft” until a human approves it; the approval and note are recorded in the audit trail.</li>
+      <li><strong>JSONL audit trail</strong> in <code>runs/</code>: every run, every stage, every decision — inspectable after the fact.</li>
+      <li><strong>Safety-gated sandbox</strong>: generated code passes a static gate (allowlisted imports, no dangerous builtins, bounded timeout) before it can execute anywhere.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ VIDEO ============ -->
+<section class="section alt" id="video">
+  <div class="wrap narrow">
+    <h2>Demo video</h2>
+    <p>2:19 end-to-end walkthrough: the run, the tiering, the architecture — with narration covering how Token Factory and Nemotron are used. (The video also ships with the code repo; the public YouTube link goes in the Devpost submission.)</p>
+    <video controls preload="metadata" class="demo-video">
+      <source src="./trace-demo.mp4" type="video/mp4">
+      Your browser can't play this video. Watch it in the repo:
+      <a href="https://github.com/solanaminter/trace-research">github.com/solanaminter/trace-research</a>
+    </video>
+    <p class="note">The demo video is bundled with this page (<code>./trace-demo.mp4</code>); after the public YouTube upload, this can be swapped for the YouTube embed.</p>
+  </div>
+</section>
+
+<!-- ============ RUN IT ============ -->
+<section class="section">
+  <div class="wrap narrow">
+    <h2>Run it yourself</h2>
+    <pre class="term"><code><span class="prompt">$</span> git clone https://github.com/solanaminter/trace-research
+<span class="prompt">$</span> cd trace-research
+<span class="prompt">$</span> python -m venv .venv &amp;&amp; source .venv/bin/activate
+<span class="prompt">$</span> pip install openai pytest requests
+
+<span class="comment"># Offline demo (deterministic mock shim, no keys):</span>
+<span class="prompt">$</span> TRACE_MOCK=1 python -m trace.cli research "your question" --auto-approve
+
+<span class="comment"># Live run (see NEBIUS_SETUP.md):</span>
+<span class="prompt">$</span> export NEBIUS_API_KEY="..."            <span class="comment"># Token Factory key</span>
+<span class="prompt">$</span> export TAVILY_API_KEY="..."            <span class="comment"># Tavily key</span>
+<span class="prompt">$</span> export TRACE_SANDBOX_BACKEND=tokenfactory
+<span class="prompt">$</span> export NEBIUS_SANDBOX_URL="..."        <span class="comment"># sandbox endpoint</span>
+<span class="prompt">$</span> python -m trace.cli research "your question"   <span class="comment"># draft until YOU approve it</span></code></pre>
+    <p class="note">Honest framing, same as the README: the video and tests run on the deterministic mock shim — the integration code paths (Token Factory inference, sandboxes, Tavily) are real and exercised by the 11-test suite, and they go live the moment the keys are set.</p>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <div>
+      <strong>Trace — deep research with receipts.</strong><br>
+      Built by Solana Minter for the Nebius × NVIDIA Global AI Hackathon (Best Apps and Agents).<br>
+      MIT License · <a href="https://github.com/solanaminter/trace-research" target="_blank" rel="noopener">github.com/solanaminter/trace-research</a>
+    </div>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
