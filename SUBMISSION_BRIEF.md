@@ -84,7 +84,8 @@
    (currently `https://api.tokenfactory.nebius.com/v1`).
 3. `curl $NEBIUS_BASE_URL/models -H "Authorization: Bearer $NEBIUS_API_KEY"`
    to confirm live Nemotron model IDs (`nvidia/nemotron-3-super-120b-a12b`,
-   `nvidia/nemotron-3-nano-30b-a3b`).
+   `nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B`, `nvidia/Nemotron-3-Ultra-550b-a55b`
+   — verified live 2026-09-15; IDs are case-sensitive).
 4. Get a Tavily key at https://tavily.com.
 5. Confirm the Token Factory Sandbox execution endpoint in dev.nebius.com
    console → set `NEBIUS_SANDBOX_URL`.
@@ -94,18 +95,19 @@
 
 ## (f) Unverified / incomplete
 
-- **Live Nebius calls not yet executed** — no API key available to this
-  builder (by design; parent was told not to share keys with builders).
-  Inference, sandbox, and Tavily code paths are real, config-driven, and
-  exercised by the 11-test suite against the deterministic mock shim.
-  Honest framing is baked into README, video narration (scene 6), and the
-  Devpost description ("mock shim" note).
+- **Live Nebius inference — smoke-tested 2026-09-15.** A real call was
+  executed against Token Factory (`nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B`,
+  drafter tier, `mock=False`, 3.8s, valid response; evidence in
+  `runs/live_smoke_20260915.json`). Auth, model IDs, and response parsing
+  confirmed. Full-pipeline live evals (planner/verifier on Super 120B)
+  pending credit approval — account currently has ~$1.
 - **Exact Token Factory Sandbox execution URL** — endpoint path is
   account-specific; `trace/sandbox.py` uses `{NEBIUS_SANDBOX_URL}/execute`
   and raises a clear error telling the user where to confirm it. Verify in
   the console before the live demo.
-- **Nemotron 3 Ultra tier** — not confirmed live on Token Factory as of
-  Sep 2026; built on Nano + Super (both live). One-line config change if it ships.
+- **Nemotron 3 Ultra tier** — confirmed live on Token Factory 2026-09-15
+  (`nvidia/Nemotron-3-Ultra-550b-a55b`); added as optional `"ultra"` tier.
+  Swap `STAGE_TIER["plan"]`/`["verify"]` to it when credits allow.
 - **Demo URL** — currently repo + video; a hosted endpoint (Nebius
   Serverless) is optional and needs the parent's Nebius account.
 - **Tavily key** — same as Nebius: parent supplies; mock covers tests/demo.

@@ -96,5 +96,10 @@ TOOL_FEEDBACK.md  # hackathon feedback on Nebius/NVIDIA tooling
 The demo video and tests run on the deterministic mock shim
 (`TRACE_MOCK=1`) — the integration code paths (Token Factory inference,
 sandboxes, Tavily) are real and exercised by the test suite, and they go live
-the moment `NEBIUS_API_KEY` / `TAVILY_API_KEY` are set. No fake "runs on
+the moment `NEBIUS_API_KEY` / `TAVILY_API_KEY` are set. **Live verification
+(2026-09-15):** a real inference call was executed against Nebius Token
+Factory (`nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B`, drafter tier, `mock=False`,
+3.8s latency, valid response) — auth, model IDs, and response parsing all
+confirmed working. Evidence: `runs/live_smoke_20260915.json` (gitignored).
+Full-pipeline live evals are pending credit approval. No fake "runs on
 Nebius" claim: see `NEBIUS_SETUP.md` for the exact live setup.
