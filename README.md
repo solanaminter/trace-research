@@ -2,6 +2,8 @@
 
 **Demo Video:** https://www.youtube.com/watch?v=NjvDF3jV9WQ
 
+**Repo:** https://github.com/solanaminter/trace-research
+
 # Trace — deep research with receipts
 
 A deep-research copilot for the **Nebius × NVIDIA Global AI Hackathon**
@@ -38,6 +40,21 @@ python -m trace.cli research "your question"   # draft only until YOU approve it
 
 The pipeline: **PLAN → SEARCH → ANALYZE → DRAFT → VERIFY → human approval → brief**,
 with a JSONL audit trail written to `runs/` for every run.
+
+## Architecture
+
+```
+ ┌──────┐  ┌────────┐  ┌─────────┐  ┌───────┐  ┌────────┐  ┌──────────────┐
+ │ PLAN │─▶│ SEARCH │─▶│ ANALYZE │─▶│ DRAFT │─▶│ VERIFY │─▶│ human APPROVE│
+ └──┬───┘  └───┬────┘  └────┬────┘  └───┬───┘  └───┬────┘  └──────┬───────┘
+    │ Nemotron │ Tavily    │ sandbox   │ Nemotron │ Nemotron    │ ships only
+    │ Super    │ advanced  │ execute   │ Nano 30B │ Super       │ on explicit
+    │ 120B     │ search +  │ (Token    │ (reason- │ 120B        │ approval
+    │ (reason- │ extract   │ Factory   │ ing low) │ (reasoning  │
+    │ ing on)  │           │ microVM)  │          │ on)         │
+    └──────────┴───────────┴───────────┴──────────┴─────────────┴─▶ JSONL audit trail
+         scoped tool permissions per stage (trace/policy.py)
+```
 
 ## How NVIDIA Nemotron + Nebius Token Factory are used
 
