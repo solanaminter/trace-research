@@ -41,7 +41,7 @@ Full-pipeline live evals on Super 120B once credits land; real Tavily search wit
 https://www.youtube.com/watch?v=NjvDF3jV9WQ (2:20, narrated, public)
 
 ## Try it out / demo URL
-https://trace-research-demo.vercel.app
+https://trace-research-alpha.vercel.app
 
 ## GitHub repo
 https://github.com/solanaminter/trace-research (MIT)

@@ -1,4 +1,4 @@
-**Live Demo:** https://trace-research-demo.vercel.app
+**Live Demo:** https://trace-research-alpha.vercel.app
 
 **Demo Video:** https://www.youtube.com/watch?v=NjvDF3jV9WQ
 

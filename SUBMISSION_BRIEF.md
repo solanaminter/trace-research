@@ -68,7 +68,7 @@
   OpenAI SDK, Nemotron 3 Super/Nano, Nebius Token Factory, Token Factory
   Sandboxes, Tavily API.
 - **Track:** Best Apps and Agents
-- **Live Demo URL:** https://trace-research-demo.vercel.app
+- **Live Demo URL:** https://trace-research-alpha.vercel.app
 - **Demo URL plan:** hosted demo = the GitHub repo README demo + YouTube video;
   optionally deploy `POST /research` on a Nebius Serverless Endpoint after
   NEBIUS_SETUP.md steps (parent's call).
