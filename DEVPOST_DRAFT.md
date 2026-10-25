@@ -15,7 +15,7 @@ Deep research with receipts — an audited research copilot on NVIDIA Nemotron v
 AI research tools hallucinate citations, invent numbers, and ship vibes. Trace is a deep-research copilot built on the opposite principle: every claim cites a source, every number is recomputed in a sandbox, and nothing ships until a human approves it.
 
 **What it does**
-Ask Trace a hard question and it runs a six-stage pipeline — PLAN → SEARCH → ANALYZE → DRAFT → VERIFY → human approval — and produces an audited research brief with a JSONL audit trail. Web search is wired through a real Tavily client (`trace/search.py`); the demo runs on a deterministic mock shim until a Tavily API key is set — a real runtime Tavily call is the one remaining step for the $3,000 Best Use of Tavily prize. Data-analysis code is safety-gated (allowlisted imports, no dangerous builtins, bounded timeouts) and executed in isolated Token Factory Sandbox microVMs. A verifier model re-checks every claim against its cited sources with confidence scores. The final brief only publishes after explicit human approval.
+Ask Trace a hard question and it runs a six-stage pipeline — PLAN → SEARCH → ANALYZE → DRAFT → VERIFY → human approval — and produces an audited research brief with a JSONL audit trail. Web search runs through a real Tavily client: a live search + extract call was verified Oct 25, 2026 through Tavily's free Researcher plan (direct Tavily account, not the still-pending Nebius Builders credit) — the client previously sent the wrong auth header (x-api-key, 401) and was fixed to Bearer auth the same night. The demo can still fall back to a deterministic mock shim when no key is set, but the real Tavily path is now proven end to end for the $3,000 Best Use of Tavily prize. Data-analysis code is safety-gated (allowlisted imports, no dangerous builtins, bounded timeouts) and executed in isolated Token Factory Sandbox microVMs. A verifier model re-checks every claim against its cited sources with confidence scores. The final brief only publishes after explicit human approval.
 
 **How we built it — NVIDIA Nemotron on Nebius Token Factory**
 All inference runs through Nebius Token Factory's OpenAI-compatible endpoint, using NVIDIA's open Nemotron 3 models with deliberate cost/quality tiering:
@@ -35,7 +35,7 @@ Tiering is pure config (`trace/config.py`) — swap model IDs without touching c
 - Live demo site + 2:20 narrated demo video.
 
 **What's next**
-Full-pipeline live evals on Super 120B once credits land; real Tavily search with an API key; Token Factory Sandbox execution against the account's endpoint.
+Full-pipeline live evals on Super 120B once credits land; real Tavily search + extract already verified Oct 25, 2026; Token Factory Sandbox execution against the account's endpoint.
 
 ## Video URL
 https://www.youtube.com/watch?v=NjvDF3jV9WQ (2:20, narrated, public)
