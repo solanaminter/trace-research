@@ -31,8 +31,9 @@ class TavilyClient:
                 "TAVILY_API_KEY is not set. Get one at https://tavily.com "
                 "or run with TRACE_MOCK=1."
             )
-# Tavily's current API authenticates with a Bearer token, not x-api-key
-    return {"Authorization": f"Bearer {self.settings.tavily_api_key}", "Content-Type": "application/json"}
+        # Tavily's current API authenticates with a Bearer token, not x-api-key
+        # (the old header returns 401 — verified Oct 25, 2026).
+        return {"Authorization": f"Bearer {self.settings.tavily_api_key}", "Content-Type": "application/json"}
 
     def search(self, query: str, *, max_results: int = 5, search_depth: str = "advanced") -> list[Source]:
         if self.settings.mock:

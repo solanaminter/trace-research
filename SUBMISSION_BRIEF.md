@@ -34,6 +34,10 @@
 
 - **Local path:** `~/workspace/hackathons/nebius-nvidia/trace/assets/trace-demo.mp4`
   (rendered from `assets/trace-demo/` HyperFrames project; 139 s ≈ 2:19, ≤3:00 ✓)
+- **Cover image (generated 2026-10-22, 2048×1152 PNG, verified image
+  bytes):** `assets/media-generation-trace-cover-0-c8ad3282-3e8e-440f-bb56-4cd8d72c133d.png`
+  — upload as the Devpost thumbnail at filing (illustrative art, not an
+  evidence metric).
 - **Proposed YouTube title:** `Trace — deep research with receipts | NVIDIA Nemotron × Nebius Token Factory`
 - **Proposed description:**
   > Trace is a deep-research copilot built for the Nebius × NVIDIA Global AI
@@ -72,7 +76,7 @@
 - **Demo URL plan:** hosted demo = the GitHub repo README demo + YouTube video;
   optionally deploy `POST /research` on a Nebius Serverless Endpoint after
   NEBIUS_SETUP.md steps (parent's call).
-- **Video URL:** YouTube public link (parent uploads `assets/trace-demo.mp4`).
+- **Video URL:** https://www.youtube.com/watch?v=NjvDF3jV9WQ (public, "Trace -- Demo" by Solana Minter, oEmbed 200 verified 2026-10-22; local source `assets/trace-demo.mp4`).
 - **Code repo:** https://github.com/solanaminter/trace-research (parent pushes)
 - **Feedback text:** paste `TOOL_FEEDBACK.md`.
 
@@ -111,5 +115,6 @@
 - **Demo URL** — currently repo + video; a hosted endpoint (Nebius
   Serverless) is optional and needs the parent's Nebius account.
 - **Tavily key** — same as Nebius: parent supplies; mock covers tests/demo.
-- **Video** — rendered locally; parent uploads to YouTube as PUBLIC
-  (unlisted is not acceptable per rules) and pastes the link.
+- **Video** — DONE: public on YouTube at https://www.youtube.com/watch?v=NjvDF3jV9WQ
+  (2:20, narrated, oEmbed 200 verified 2026-10-22; unlisted would not
+  satisfy the rules, but this link is public).
