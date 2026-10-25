@@ -58,7 +58,7 @@
 <section class="section alt" id="run">
   <div class="wrap">
     <h2>End-to-end walkthrough <span class="tag">real recorded run</span></h2>
-    <p>This is the output of the <strong>actual pipeline</strong> running on the query <em>“How do frontier coding agents verify the code they write?”</em> Below is exactly what the CLI printed, the sandbox job it executed, and the audit trail it wrote. The recorded run used the deterministic mock shim (<code>TRACE_MOCK=1</code>) — the identical code path that runs live; set <code>NEBIUS_API_KEY</code> / <code>TAVILY_API_KEY</code> / <code>NEBIUS_SANDBOX_URL</code> per <code>NEBIUS_SETUP.md</code> and it goes live on real Token Factory inference, sandboxes, and Tavily.</p>
+    <p>This is the output of the <strong>actual pipeline</strong> running on the query <em>“How do frontier coding agents verify the code they write?”</em> Below is exactly what the CLI printed, the sandbox job it executed, and the audit trail it wrote. The recorded run used the deterministic mock shim (<code>TRACE_MOCK=1</code>) — the identical code path that runs live. Update, Oct 25: the live path is now proven: a real Tavily search + extract call was verified through the client the same night its auth header was fixed to Bearer (direct Tavily Researcher account, not the still-pending Nebius Builders credit), and real Nebius Token Factory inference (Nemotron-3-Nano-30B) has been verified through the client. The transcript below remains the recorded mock run.</p>
 
     <h3>1 · The command</h3>
     <pre class="term"><code><span class="prompt">$</span> TRACE_MOCK=1 python -m trace.cli research "How do frontier coding agents verify the code they write?" \
@@ -238,7 +238,7 @@ assemble brief assembled: 3 sections</code></pre>
 <span class="prompt">$</span> export TRACE_SANDBOX_BACKEND=tokenfactory
 <span class="prompt">$</span> export NEBIUS_SANDBOX_URL="..."        <span class="comment"># sandbox endpoint</span>
 <span class="prompt">$</span> python -m trace.cli research "your question"   <span class="comment"># draft until YOU approve it</span></code></pre>
-    <p class="note">Honest framing, same as the README: the video and tests run on the deterministic mock shim — the integration code paths (Token Factory inference, sandboxes, Tavily) are real and exercised by the 11-test suite, and they go live the moment the keys are set.</p>
+    <p class="note">Honest framing, same as the README: the recorded run and video above use the deterministic mock shim — the integration code paths (Token Factory inference, sandboxes, Tavily) are real and exercised by the 11-test suite, and as of Oct 25 the Tavily search + extract path and Nebius Token Factory inference have both been verified live through the client.</p>
   </div>
 </section>
 
