@@ -121,3 +121,12 @@ Factory (`nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B`, drafter tier, `mock=False`,
 confirmed working. Evidence: `runs/live_smoke_20260915.json` (gitignored).
 Full-pipeline live evals are pending credit approval. No fake "runs on
 Nebius" claim: see `NEBIUS_SETUP.md` for the exact live setup.
+
+**Update (2026-10-25):** the Tavily path is no longer mock-only — a real
+search + extract call was verified end to end through the project's own
+client the same night its auth header was fixed to Bearer (direct Tavily
+Researcher account, not the still-pending Nebius Builders credit; no
+Builders verification email was found in the mailbox search on 2026-10-27).
+The live demo page carries this note, and the recorded video transcript
+remains the mock run — labelled as such, not presented as a live run.
+Full-pipeline live evals on Super 120B are still pending credit approval.
